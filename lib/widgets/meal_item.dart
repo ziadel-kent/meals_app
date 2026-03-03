@@ -49,7 +49,7 @@ class MealItem extends StatelessWidget {
   void selectMeal(BuildContext context) {
     Navigator.of(
       context,
-    ).pushNamed(AppStrings.kMealDetailsScreen, arguments: meal);
+    ).pushNamed(AppStrings.kMealDetailsScreen, arguments: meal.id);
   }
 
   @override

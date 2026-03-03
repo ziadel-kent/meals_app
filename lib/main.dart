@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
         fontFamily: 'Raleway',
+        scaffoldBackgroundColor: const Color.fromARGB(255, 234, 229, 213),
         canvasColor: const Color.fromARGB(222, 145, 175, 196),
         appBarTheme: ThemeData.light().appBarTheme.copyWith(
           // titleTextStyle: TextStyle(fontFamily:'RobotoCondensed')
@@ -43,6 +44,10 @@ class MyApp extends StatelessWidget {
         '/': (ctx) => CategoriesScreen(),
         AppStrings.kCategoryMealsScreen: (ctx) => CategoryMealsScreen(),
         AppStrings.kMealDetailsScreen: (ctx) => MealDetailsScreen(),
+      },
+
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(builder: (ctx) => CategoryMealsScreen());
       },
     );
   }
