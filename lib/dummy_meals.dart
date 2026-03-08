@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import './models/meal.dart';
+import 'features/data/models/meal.dart';
 
-import './models/category.dart';
+import 'features/data/models/category.dart';
 
 const DUMMY_CATEGORIES = [
   Category(id: 'c1', title: 'Italian', color: Colors.purple),

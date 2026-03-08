@@ -1,15 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/core/constants/app_strings.dart';
-import 'package:meals_app/screens/meal_details_screen.dart';
-import 'screens/categories_screen.dart';
-import 'screens/category_meals_screen.dart';
+import 'package:meals_app/core/theme/app_theme.dart';
+import 'package:meals_app/dummy_meals.dart';
+import 'package:meals_app/features/presentation/screens/favorite_screen.dart';
+import './core/constants/app_strings.dart';
+import 'features/data/models/meal.dart';
+import 'features/presentation/screens/filters_screen.dart';
+import 'features/presentation/screens/meal_details_screen.dart';
+import 'features/presentation/screens/tabs_screen.dart';
+import 'features/presentation/screens/categories_screen.dart';
+import 'features/presentation/screens/category_meals_screen.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Map<String, bool> _filters = {
+    'gluten': false,
+    'lactose': false,
+    'vegan': false,
+    'vegetarian': false,
+  };
+  List<Meal> _availableMeals = DUMMY_MEALS;
+  List<Meal> favMeals = [];
+
+  void _setFilters(Map<String, bool> filterData) {
+    setState(() {
+      _filters = filterData;
+
+      _availableMeals =
+          DUMMY_MEALS.where((meal) {
+            if (_filters['gluten']! && !meal.isGlutenFree) {
+              return false;
+            }
+            if (_filters['lactose']! && !meal.isLactoseFree) {
+              return false;
+            }
+            if (_filters['vegan']! && !meal.isVegan) {
+              return false;
+            }
+            if (_filters['vegetarian']! && !meal.isVegetarian) {
+              return false;
+            }
+            return true;
+          }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,37 +60,26 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'DeliMeal',
 
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey),
-        fontFamily: 'Raleway',
-        scaffoldBackgroundColor: const Color.fromARGB(255, 234, 229, 213),
-        canvasColor: const Color.fromARGB(222, 145, 175, 196),
-        appBarTheme: ThemeData.light().appBarTheme.copyWith(
-          // titleTextStyle: TextStyle(fontFamily:'RobotoCondensed')
-        ),
-        textTheme: ThemeData.light().textTheme.copyWith(
-          bodySmall: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
-          bodyMedium: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
-          titleMedium: TextStyle(
-            fontSize: 20,
-            fontFamily: 'RobotoCondensed',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        primaryColor: Colors.blueGrey.shade700,
-      ),
+      theme: AppTheme.lightTheme,
 
       // home: const CategoriesScreen(),
       initialRoute: '/',
       // onGenerateRoute: (settings) =>  ,
       routes: {
-        '/': (ctx) => CategoriesScreen(),
-        AppStrings.kCategoryMealsScreen: (ctx) => CategoryMealsScreen(),
+        '/': (ctx) => TabsScreen(favMeals),
+        CategoryMealsScreen.id:
+            (ctx) => CategoryMealsScreen(_availableMeals, favMeals),
         AppStrings.kMealDetailsScreen: (ctx) => MealDetailsScreen(),
+        FavoriteScreen.id: (ctx) => FavoriteScreen(favMeals),
+        FiltersScreen.routeName:
+            (ctx) => FiltersScreen(
+              currentFilters: _filters,
+              setFilters: _setFilters,
+            ),
       },
 
       onUnknownRoute: (settings) {
-        return MaterialPageRoute(builder: (ctx) => CategoryMealsScreen());
+        return MaterialPageRoute(builder: (ctx) => CategoriesScreen());
       },
     );
   }

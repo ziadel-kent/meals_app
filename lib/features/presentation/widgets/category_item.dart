@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../core/constants/app_strings.dart';
+import 'package:meals_app/features/presentation/screens/category_meals_screen.dart';
+import '../../../core/constants/app_strings.dart';
 
 class CategoryItem extends StatelessWidget {
   const CategoryItem({
@@ -14,10 +15,9 @@ class CategoryItem extends StatelessWidget {
   final Color color;
 
   void _selectedCategory(BuildContext context) {
-    Navigator.of(context).pushNamed(
-      AppStrings.kCategoryMealsScreen,
-      arguments: {'id': id, 'title': title},
-    );
+    Navigator.of(
+      context,
+    ).pushNamed(CategoryMealsScreen.id, arguments: {'id': id, 'title': title});
   }
 
   @override
@@ -33,7 +33,7 @@ class CategoryItem extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             gradient: LinearGradient(
-              colors: [color.withOpacity(0.7), color],
+              colors: [color, color.withOpacity(0.7), color],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),

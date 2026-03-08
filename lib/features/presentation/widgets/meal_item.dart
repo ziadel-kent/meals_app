@@ -2,10 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:meals_app/core/constants/app_strings.dart';
 import 'package:meals_app/dummy_meals.dart';
-import 'package:meals_app/models/meal.dart';
+import 'package:meals_app/features/data/models/meal.dart';
+import 'package:meals_app/features/presentation/screens/meal_details_screen.dart';
 
-class MealItem extends StatelessWidget {
-  const MealItem({
+class MealItem extends StatefulWidget {
+  MealItem({
     super.key,
     // required this.title,
     // required this.affordability,
@@ -13,13 +14,45 @@ class MealItem extends StatelessWidget {
     // required this.duration,
     // required this.imageUrl,
     required this.meal,
+    required this.removeItem,
+    this.favMeal = const [],
+    // requilred this.
   });
+
   final Meal meal;
-  // final String title;
-  // final String imageUrl;
-  // final int duration;
-  // final Complexity complexity;
-  // final Affordability affordability;
+  List<Meal> favMeal;
+  final Function(String) removeItem;
+
+  @override
+  State<MealItem> createState() => _MealItemState();
+}
+
+class _MealItemState extends State<MealItem> {
+  var _isFav = false;
+
+
+  bool _isFavorite(Meal mmeal) {
+    return widget.favMeal.any((meal) => meal == mmeal);
+  }
+
+
+  void toggleFavorite(Meal meal) {
+    if (widget.favMeal.contains(meal)) {
+      widget.favMeal.remove(meal);
+    } else {
+      widget.favMeal.add(meal);
+    }
+  }
+
+
+  void selectMeal(BuildContext context) async {
+    final result = await Navigator.of(
+      context,
+    ).pushNamed(AppStrings.kMealDetailsScreen, arguments: widget.meal.id);
+
+    if (result != null) widget.removeItem(result as String);
+  }
+
   Widget _row(IconData icon, String text) {
     return Row(
       children: [
@@ -29,29 +62,6 @@ class MealItem extends StatelessWidget {
       ],
     );
   }
-
-  // String get comlixityText {
-  //   switch (meal.complexity) {
-  //     case Complexity.Simple:
-  //       return 'Simple';
-
-  //     case Complexity.Challenging:
-  //       return 'Challenging';
-
-  //     case Complexity.Hard:
-  //       return 'Hard';
-
-  //     default:
-  //       return 'unknown';
-  //   }
-  // }
-
-  void selectMeal(BuildContext context) {
-    Navigator.of(
-      context,
-    ).pushNamed(AppStrings.kMealDetailsScreen, arguments: meal.id);
-  }
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -74,18 +84,12 @@ class MealItem extends StatelessWidget {
                   child: CachedNetworkImage(
                     fit: BoxFit.cover,
                     width: double.infinity,
-                    imageUrl: meal.imageUrl,
+                    imageUrl: widget.meal.imageUrl,
                     placeholder:
                         (context, url) =>
                             Center(child: CircularProgressIndicator()),
                     errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
-                  //  Image.network(
-                  //   meal.imageUrl,
-                  //   height: 250,
-                  //   width: double.infinity,
-                  //   fit: BoxFit.cover,
-                  // ),
                 ),
                 Positioned(
                   bottom: 20,
@@ -95,11 +99,25 @@ class MealItem extends StatelessWidget {
                     width: 220,
                     color: Colors.black54,
                     child: Text(
-                      meal.title,
+                      widget.meal.title,
                       style: TextStyle(fontSize: 26, color: Colors.white),
                       softWrap: true,
                       overflow: TextOverflow.fade,
                     ),
+                  ),
+                ),
+                Positioned(
+                  child: IconButton(
+                    onPressed: () {
+                      toggleFavorite(widget.meal);
+                      setState(() {
+                        _isFav = !_isFav;
+                      });
+                    },
+                    icon:
+                        _isFavorite(widget.meal)
+                            ? Icon(Icons.favorite, color: Colors.red)
+                            : Icon(Icons.favorite),
                   ),
                 ),
               ],
@@ -109,13 +127,16 @@ class MealItem extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _row(Icons.schedule, '${meal.duration}min'),
+                  _row(Icons.schedule, '${widget.meal.duration}min'),
 
-                  _row(Icons.work, meal.complexity.toString().split('.').last),
+                  _row(
+                    Icons.work,
+                    widget.meal.complexity.toString().split('.').last,
+                  ),
 
                   _row(
                     Icons.attach_money,
-                    meal.affordability.toString().split('.').last,
+                    widget.meal.affordability.toString().split('.').last,
                   ),
                 ],
               ),
