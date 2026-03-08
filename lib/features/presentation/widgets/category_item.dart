@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/core/routers/app_routes.dart';
 import 'package:meals_app/features/presentation/screens/category_meals_screen.dart';
 import '../../../core/constants/app_strings.dart';
 
@@ -17,7 +18,7 @@ class CategoryItem extends StatelessWidget {
   void _selectedCategory(BuildContext context) {
     Navigator.of(
       context,
-    ).pushNamed(CategoryMealsScreen.id, arguments: {'id': id, 'title': title});
+    ).pushNamed(AppRoutes.kcategories, arguments: {'id': id, 'title': title});
   }
 
   @override

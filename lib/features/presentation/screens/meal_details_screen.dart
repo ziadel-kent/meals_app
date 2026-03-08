@@ -5,7 +5,6 @@ import 'package:meals_app/features/data/models/meal.dart';
 
 class MealDetailsScreen extends StatelessWidget {
   const MealDetailsScreen({super.key, this.meal});
-  static const id = '/category-meal-screen';
   final Meal? meal;
   @override
   Widget _buildContainer(BuildContext context, Widget child) {
@@ -53,13 +52,6 @@ class MealDetailsScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            
-            actions: [
-              IconButton(
-                onPressed: () {},
-                icon: Icon(Icons.delete_outline_rounded),
-              ),
-            ],
             expandedHeight: 300,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(

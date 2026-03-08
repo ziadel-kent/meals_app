@@ -6,16 +6,28 @@ class MealsViewModel extends ChangeNotifier {
   List<Meal> _availableMeals = DUMMY_MEALS;
   List<Meal> _favoriteMeals = [];
 
+  List<Meal> get availableMeals => _availableMeals;
+  List<Meal> get favoriteMeals => _favoriteMeals;
+  List<Meal> displayedMeal = [];
+
+
+  setCategoryMeals(String CategoryId){
+    displayedMeal= 
+          availableMeals.where((meal) {
+            return meal.categories.contains(CategoryId);
+          }).toList();
+  }
+  void removeItem(String mealId) {
+    displayedMeal.removeWhere((meal) => meal.id == mealId);
+    ;
+  }
+
   Map<String, bool> filters = {
     'gluten': false,
     'lactose': false,
     'vegan': false,
     'vegetarian': false,
   };
-
-  List<Meal> get availableMeals => _availableMeals;
-  List<Meal> get favoriteMeals => _favoriteMeals;
-
   void setFilters(Map<String, bool> filterData) {
     filters = filterData;
 

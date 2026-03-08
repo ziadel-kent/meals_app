@@ -24,7 +24,7 @@ const DUMMY_MEALS = const [
     affordability: Affordability.Affordable,
     complexity: Complexity.Simple,
     imageUrl:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg',
+        'https://upload.wikimedia.org/wikipedia/commons/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg',
     duration: 20,
     ingredients: [
       '4 Tomatoes',
@@ -50,7 +50,7 @@ const DUMMY_MEALS = const [
   ),
   Meal(
     id: 'm2',
-    categories: ['c2'],
+    categories: ['c2', 'c3', 'c4'],
     title: 'Toast Hawaii',
     affordability: Affordability.Affordable,
     complexity: Complexity.Simple,
@@ -76,7 +76,7 @@ const DUMMY_MEALS = const [
   ),
   Meal(
     id: 'm3',
-    categories: ['c2', 'c3'],
+    categories: ['c1', 'c2', 'c3'],
     title: 'Classic Hamburger',
     affordability: Affordability.Pricey,
     complexity: Complexity.Simple,
@@ -105,7 +105,7 @@ const DUMMY_MEALS = const [
   ),
   Meal(
     id: 'm4',
-    categories: ['c4'],
+    categories: ['c4', 'c5'],
     title: 'Wiener Schnitzel',
     affordability: Affordability.Luxurious,
     complexity: Complexity.Challenging,
@@ -138,11 +138,7 @@ const DUMMY_MEALS = const [
   ),
   Meal(
     id: 'm5',
-    categories: [
-      'c2'
-          'c5',
-      'c10',
-    ],
+    categories: ['c2', 'c5', 'c10'],
     title: 'Salad with Smoked Salmon',
     affordability: Affordability.Luxurious,
     complexity: Complexity.Simple,
@@ -236,8 +232,8 @@ const DUMMY_MEALS = const [
   ),
   Meal(
     id: 'm8',
-    categories: ['c8'],
-    title: 'Creamy Indian Chicken Curry',
+    categories: ['c8', 'c3', 'c6', 'c10'],
+    title: 'Creamy Asian Chicken soup',
     affordability: Affordability.Pricey,
     complexity: Complexity.Challenging,
     imageUrl:
@@ -267,7 +263,7 @@ const DUMMY_MEALS = const [
   ),
   Meal(
     id: 'm9',
-    categories: ['c9'],
+    categories: ['c9', 'c5', 'c8', 'c2'],
     title: 'Chocolate Souffle',
     affordability: Affordability.Affordable,
     complexity: Complexity.Hard,
