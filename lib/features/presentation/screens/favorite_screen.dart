@@ -2,15 +2,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:meals_app/features/data/models/meal.dart';
 import 'package:meals_app/features/presentation/widgets/meal_item.dart';
+import 'package:meals_app/viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class FavoriteScreen extends StatelessWidget {
-  const FavoriteScreen(this.meal);
-  static const id = '/favorite-meal';
-  final List<Meal> meal;
-
+  // const FavoriteScreen(this.meal);
+  // static const id = '/favorite-meal';
+  // final List<Meal> meal;
 
   @override
   Widget build(BuildContext context) {
+    final meal = context.watch<MealsViewModel>().favoriteMeals;
     if (meal.isEmpty) {
       return Center(
         child: Text('There\'s no Favorites yet- try adding some! '),

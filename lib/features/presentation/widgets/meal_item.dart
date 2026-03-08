@@ -4,19 +4,17 @@ import 'package:meals_app/core/constants/app_strings.dart';
 import 'package:meals_app/dummy_meals.dart';
 import 'package:meals_app/features/data/models/meal.dart';
 import 'package:meals_app/features/presentation/screens/meal_details_screen.dart';
+import 'package:meals_app/viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class MealItem extends StatefulWidget {
   MealItem({
     super.key,
-    // required this.title,
-    // required this.affordability,
-    // required this.complexity,
-    // required this.duration,
-    // required this.imageUrl,
+ 
     required this.meal,
     required this.removeItem,
     this.favMeal = const [],
-    // requilred this.
+
   });
 
   final Meal meal;
@@ -30,20 +28,17 @@ class MealItem extends StatefulWidget {
 class _MealItemState extends State<MealItem> {
   var _isFav = false;
 
+  // bool _isFavorite(Meal mmeal) {
+  //   return widget.favMeal.any((meal) => meal == mmeal);
+  // }
 
-  bool _isFavorite(Meal mmeal) {
-    return widget.favMeal.any((meal) => meal == mmeal);
-  }
-
-
-  void toggleFavorite(Meal meal) {
-    if (widget.favMeal.contains(meal)) {
-      widget.favMeal.remove(meal);
-    } else {
-      widget.favMeal.add(meal);
-    }
-  }
-
+  // void toggleFavorite(Meal meal) {
+  //   if (widget.favMeal.contains(meal)) {
+  //     widget.favMeal.remove(meal);
+  //   } else {
+  //     widget.favMeal.add(meal);
+  //   }
+  // }
 
   void selectMeal(BuildContext context) async {
     final result = await Navigator.of(
@@ -62,8 +57,11 @@ class _MealItemState extends State<MealItem> {
       ],
     );
   }
+
   @override
   Widget build(BuildContext context) {
+    final mealsVM = context.watch<MealsViewModel>();
+    final isFav = mealsVM.isFavorite;
     return InkWell(
       onTap: () => selectMeal(context),
       child: Card(
@@ -109,13 +107,13 @@ class _MealItemState extends State<MealItem> {
                 Positioned(
                   child: IconButton(
                     onPressed: () {
-                      toggleFavorite(widget.meal);
+                      mealsVM.toggleFavorite(widget.meal);
                       setState(() {
                         _isFav = !_isFav;
                       });
                     },
                     icon:
-                        _isFavorite(widget.meal)
+                        isFav(widget.meal)
                             ? Icon(Icons.favorite, color: Colors.red)
                             : Icon(Icons.favorite),
                   ),

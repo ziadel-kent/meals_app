@@ -9,37 +9,35 @@ import 'package:meals_app/features/presentation/screens/filters_screen.dart';
 import 'package:meals_app/features/presentation/screens/tabs_screen.dart';
 
 class AppRouter {
-
   Route generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case AppRoutes.kTabs:
-        return MaterialPageRoute(
-          builder: (context) {
-            return TabsScreen();
-          },
-          
-        );
-      case AppRoutes.kcategories:
-        return MaterialPageRoute(
-          builder: (context) {
-            return CategoryMealsScreen();
-          },
-          
-        );
+      // case AppRoutes.kTabs:
+      //   return MaterialPageRoute(
+      //     builder: (context) {
+      //       return TabsScreen();
+      //     },
+
+      //   );
+      // case AppRoutes.kcategories:
+      //   return MaterialPageRoute(
+      //     builder: (context) {
+      //       return CategoryMealsScreen();
+      //     },
+
+      //   );
       case AppRoutes.kFavorites:
         return MaterialPageRoute(
           builder: (context) {
             return FavoriteScreen();
           },
-          
         );
-      case AppRoutes.kFilters:
-        return MaterialPageRoute(
-          builder: (context) {
-            return FiltersScreen();
-          },
-          
-        );
+      // case AppRoutes.kFilters:
+      //   return MaterialPageRoute(
+      //     builder: (context) {
+      //       return FiltersScreen();
+      //     },
+
+      //   );
       default:
         return MaterialPageRoute(
           builder: (context) {

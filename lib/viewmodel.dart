@@ -19,29 +19,28 @@ class MealsViewModel extends ChangeNotifier {
   void setFilters(Map<String, bool> filterData) {
     filters = filterData;
 
-    _availableMeals = DUMMY_MEALS.where((meal) {
-      if (filters['gluten']! && !meal.isGlutenFree) return false;
-      if (filters['lactose']! && !meal.isLactoseFree) return false;
-      if (filters['vegan']! && !meal.isVegan) return false;
-      if (filters['vegetarian']! && !meal.isVegetarian) return false;
-      return true;
-    }).toList();
+    _availableMeals =
+        DUMMY_MEALS.where((meal) {
+          if (filters['gluten']! && !meal.isGlutenFree) return false;
+          if (filters['lactose']! && !meal.isLactoseFree) return false;
+          if (filters['vegan']! && !meal.isVegan) return false;
+          if (filters['vegetarian']! && !meal.isVegetarian) return false;
+          return true;
+        }).toList();
 
     notifyListeners();
   }
 
-  void toggleFavorite(String mealId) {
-    final existingIndex =
-        _favoriteMeals.indexWhere((meal) => meal.id == mealId);
+  bool isFavorite(Meal mmeal) {
+    return _favoriteMeals.any((meal) => meal == mmeal);
+  }
 
-    if (existingIndex >= 0) {
-      _favoriteMeals.removeAt(existingIndex);
+  void toggleFavorite(Meal meal) {
+    if (_favoriteMeals.contains(meal)) {
+      _favoriteMeals.remove(meal);
     } else {
-      _favoriteMeals.add(
-        DUMMY_MEALS.firstWhere((meal) => meal.id == mealId),
-      );
+      _favoriteMeals.add(meal);
     }
-
     notifyListeners();
   }
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:meals_app/core/routers/app_router.dart';
 import 'package:meals_app/core/theme/app_theme.dart';
 import 'package:meals_app/dummy_meals.dart';
 import 'package:meals_app/features/presentation/screens/favorite_screen.dart';
+import 'package:meals_app/viewmodel.dart';
+import 'package:provider/provider.dart';
 import './core/constants/app_strings.dart';
 import 'features/data/models/meal.dart';
 import 'features/presentation/screens/filters_screen.dart';
@@ -11,7 +14,12 @@ import 'features/presentation/screens/categories_screen.dart';
 import 'features/presentation/screens/category_meals_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => MealsViewModel(),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -65,12 +73,14 @@ class _MyAppState extends State<MyApp> {
       // home: const CategoriesScreen(),
       initialRoute: '/',
       // onGenerateRoute: (settings) =>  ,
+      onGenerateRoute: AppRouter().generateRoute,
       routes: {
-        '/': (ctx) => TabsScreen(favMeals),
+        '/': (ctx) => TabsScreen(),
+        
         CategoryMealsScreen.id:
             (ctx) => CategoryMealsScreen(_availableMeals, favMeals),
         AppStrings.kMealDetailsScreen: (ctx) => MealDetailsScreen(),
-        FavoriteScreen.id: (ctx) => FavoriteScreen(favMeals),
+        // FavoriteScreen.id: (ctx) => FavoriteScreen(favMeals),
         FiltersScreen.routeName:
             (ctx) => FiltersScreen(
               currentFilters: _filters,
