@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:meals_app/core/constants/app_strings.dart';
+import 'package:meals_app/core/routers/app_router.dart';
+import 'package:meals_app/core/routers/app_routes.dart';
 import 'package:meals_app/dummy_meals.dart';
 import 'package:meals_app/features/data/models/meal.dart';
 import 'package:meals_app/features/presentation/screens/meal_details_screen.dart';
@@ -8,17 +10,10 @@ import 'package:meals_app/viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class MealItem extends StatefulWidget {
-  MealItem({
-    super.key,
- 
-    required this.meal,
-    required this.removeItem,
-    this.favMeal = const [],
-
-  });
+  MealItem({super.key, required this.meal, required this.removeItem});
 
   final Meal meal;
-  List<Meal> favMeal;
+
   final Function(String) removeItem;
 
   @override
@@ -28,22 +23,10 @@ class MealItem extends StatefulWidget {
 class _MealItemState extends State<MealItem> {
   var _isFav = false;
 
-  // bool _isFavorite(Meal mmeal) {
-  //   return widget.favMeal.any((meal) => meal == mmeal);
-  // }
-
-  // void toggleFavorite(Meal meal) {
-  //   if (widget.favMeal.contains(meal)) {
-  //     widget.favMeal.remove(meal);
-  //   } else {
-  //     widget.favMeal.add(meal);
-  //   }
-  // }
-
   void selectMeal(BuildContext context) async {
     final result = await Navigator.of(
       context,
-    ).pushNamed(AppStrings.kMealDetailsScreen, arguments: widget.meal.id);
+    ).pushNamed(AppRoutes.kmealDetails, arguments: widget.meal.id);
 
     if (result != null) widget.removeItem(result as String);
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/core/routers/app_router.dart';
+import 'package:meals_app/core/routers/app_routes.dart';
 import 'package:meals_app/core/theme/app_theme.dart';
 import 'package:meals_app/dummy_meals.dart';
 import 'package:meals_app/features/presentation/screens/favorite_screen.dart';
@@ -71,16 +72,13 @@ class _MyAppState extends State<MyApp> {
       theme: AppTheme.lightTheme,
 
       // home: const CategoriesScreen(),
-      initialRoute: '/',
+      // initialRoute: '/',
       // onGenerateRoute: (settings) =>  ,
       onGenerateRoute: AppRouter().generateRoute,
       routes: {
-        '/': (ctx) => TabsScreen(),
-        
-        CategoryMealsScreen.id:
-            (ctx) => CategoryMealsScreen(_availableMeals, favMeals),
-        AppStrings.kMealDetailsScreen: (ctx) => MealDetailsScreen(),
-        // FavoriteScreen.id: (ctx) => FavoriteScreen(favMeals),
+        // AppRoutes.kcategories: (ctx) => CategoryMealsScreen(),
+        // AppStrings.kMealDetailsScreen: (ctx) => MealDetailsScreen(),
+
         FiltersScreen.routeName:
             (ctx) => FiltersScreen(
               currentFilters: _filters,
