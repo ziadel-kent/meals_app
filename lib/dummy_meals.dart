@@ -3,20 +3,60 @@ import 'features/data/models/meal.dart';
 
 import 'features/data/models/category.dart';
 
-const DUMMY_CATEGORIES = [
-  Category(id: 'c1', title: 'Italian', color: Colors.purple),
-  Category(id: 'c2', title: 'Quick & Easy', color: Colors.red),
-  Category(id: 'c3', title: 'Hamburgers', color: Colors.orange),
-  Category(id: 'c4', title: 'German', color: Colors.amber),
-  Category(id: 'c5', title: 'Light & Lovely', color: Colors.blue),
-  Category(id: 'c6', title: 'Exotic', color: Colors.green),
-  Category(id: 'c7', title: 'Breakfast', color: Colors.lightBlue),
-  Category(id: 'c8', title: 'Asian', color: Colors.lightGreen),
-  Category(id: 'c9', title: 'French', color: Colors.pink),
-  Category(id: 'c10', title: 'Summer', color: Colors.teal),
+const DUMMY_CATEGORIES = const [
+  Category(
+    id: 'c1',
+    title: 'Italian',
+    color: Colors.purple,
+    icon: Icons.local_pizza,
+  ),
+  Category(
+    id: 'c2',
+    title: 'Quick & Easy',
+    color: Colors.red,
+    icon: Icons.timer,
+  ),
+  Category(
+    id: 'c3',
+    title: 'Hamburgers',
+    color: Colors.orange,
+    icon: Icons.fastfood,
+  ),
+  Category(
+    id: 'c4',
+    title: 'German',
+    color: Colors.amber,
+    icon: Icons.restaurant,
+  ),
+  Category(
+    id: 'c5',
+    title: 'Light & Lovely',
+    color: Colors.blue,
+    icon: Icons.emoji_food_beverage,
+  ),
+  Category(
+    id: 'c6',
+    title: 'Exotic',
+    color: Colors.green,
+    icon: Icons.travel_explore,
+  ),
+  Category(
+    id: 'c7',
+    title: 'Breakfast',
+    color: const Color.fromARGB(255, 80, 94, 100),
+    icon: Icons.free_breakfast,
+  ),
+  Category(
+    id: 'c8',
+    title: 'Asian',
+    color: Colors.lightGreen,
+    icon: Icons.ramen_dining,
+  ),
+  Category(id: 'c9', title: 'French', color: Colors.pink, icon: Icons.cake),
+  Category(id: 'c10', title: 'Summer', color: Colors.teal, icon: Icons.sunny),
 ];
 
-const DUMMY_MEALS = const [
+const DUMMY_MEALS = [
   Meal(
     id: 'm1',
     categories: ['c1', 'c2'],
@@ -138,7 +178,7 @@ const DUMMY_MEALS = const [
   ),
   Meal(
     id: 'm5',
-    categories: ['c2', 'c5', 'c10'],
+    categories: ['c2', 'c5', 'c8'],
     title: 'Salad with Smoked Salmon',
     affordability: Affordability.Luxurious,
     complexity: Complexity.Simple,
@@ -263,7 +303,7 @@ const DUMMY_MEALS = const [
   ),
   Meal(
     id: 'm9',
-    categories: ['c9', 'c5', 'c8', 'c2'],
+    categories: ['c9', 'c5', 'c2'],
     title: 'Chocolate Souffle',
     affordability: Affordability.Affordable,
     complexity: Complexity.Hard,

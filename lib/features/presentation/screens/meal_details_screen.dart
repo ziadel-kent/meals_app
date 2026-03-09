@@ -1,16 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:meals_app/core/theme/app_theme.dart';
 import 'package:meals_app/dummy_meals.dart';
 import 'package:meals_app/features/data/models/meal.dart';
 
 class MealDetailsScreen extends StatelessWidget {
   const MealDetailsScreen({super.key, this.meal});
   final Meal? meal;
-  @override
   Widget _buildContainer(BuildContext context, Widget child) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: const BoxDecoration(
         color: Colors.amber,
         borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
@@ -30,7 +30,7 @@ class MealDetailsScreen extends StatelessWidget {
         ),
 
         Container(
-          margin: EdgeInsets.only(left: 55, right: 55),
+          margin: const EdgeInsets.only(left: 55, right: 55),
           height: 240,
           width: 300,
           decoration: BoxDecoration(
@@ -44,9 +44,9 @@ class MealDetailsScreen extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
-    var mealId = ModalRoute.of(context)?.settings.arguments as String;
+    final mealId = ModalRoute.of(context)?.settings.arguments as String;
 
-    var mealDetail = DUMMY_MEALS.firstWhere((meal) => meal.id == mealId);
+    final mealDetail = DUMMY_MEALS.firstWhere((meal) => meal.id == mealId);
 
     return Scaffold(
       body: CustomScrollView(
@@ -55,7 +55,14 @@ class MealDetailsScreen extends StatelessWidget {
             expandedHeight: 300,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(mealDetail.title),
+              title: Container(
+                margin: EdgeInsets.all(8),
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  mealDetail.title,
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
 
               background: CachedNetworkImage(
                 fit: BoxFit.cover,
@@ -63,16 +70,17 @@ class MealDetailsScreen extends StatelessWidget {
                 imageUrl: mealDetail.imageUrl,
                 placeholder:
                     (context, url) =>
-                        Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => Icon(Icons.error),
+                        const Center(child: CircularProgressIndicator()),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
           ),
           SliverToBoxAdapter(
             child: Column(
               children: [
+                SizedBox(height: 70),
                 Container(
-                  height: 600,
+                  height: 500,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: [
@@ -82,7 +90,7 @@ class MealDetailsScreen extends StatelessWidget {
                           physics: ClampingScrollPhysics(),
                           itemCount: mealDetail.ingredients.length,
                           itemBuilder: (context, index) {
-                            var meal = mealDetail.ingredients[index];
+                            final meal = mealDetail.ingredients[index];
                             return _buildContainer(
                               context,
                               ListTile(
@@ -101,7 +109,7 @@ class MealDetailsScreen extends StatelessWidget {
                         ListView.builder(
                           itemCount: mealDetail.steps.length,
                           itemBuilder: (context, index) {
-                            var meal = mealDetail.steps[index];
+                            final meal = mealDetail.steps[index];
                             return _buildContainer(
                               context,
                               ListTile(
@@ -125,10 +133,11 @@ class MealDetailsScreen extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.delete),
+        child: const Icon(Icons.delete),
         onPressed: () {
           Navigator.of(context).pop(mealId);
         },
+        backgroundColor: ThemeData.light().canvasColor,
       ),
     );
   }

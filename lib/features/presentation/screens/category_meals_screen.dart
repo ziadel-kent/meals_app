@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/dummy_meals.dart';
-import 'package:meals_app/features/data/models/meal.dart';
 import 'package:meals_app/features/presentation/widgets/meal_item.dart';
 import 'package:meals_app/viewmodel.dart';
 import 'package:provider/provider.dart';
@@ -14,8 +12,8 @@ class CategoryMealsScreen extends StatefulWidget {
 }
 
 class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
-  var title;
-  var id;
+  late final String title;
+  late final String id;
   bool _loadedInitData = false;
 
   @override
@@ -24,25 +22,15 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
       final routeArgs =
           ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
-      title = routeArgs['title'];
-      id = routeArgs['id'];
+      title = routeArgs['title']!;
+      id = routeArgs['id']!;
 
-      // displayedMeal =
-      //     widget.availableMeals.where((meal) {
-      //       return meal.categories.contains(id);
-      //     }).toList();
       Provider.of<MealsViewModel>(context, listen: false).setCategoryMeals(id);
 
       _loadedInitData = true;
     }
     super.didChangeDependencies();
   }
-
-  // void _removeItem(String mealId) {
-  //   setState(() {
-  //     displayedMeal.removeWhere((meal) => meal.id == mealId);
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +39,7 @@ class _CategoryMealsScreenState extends State<CategoryMealsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('$title', style: TextStyle(color: Colors.black)),
+        title: Text('$title', style: const TextStyle(color: Colors.black)),
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: ListView.builder(

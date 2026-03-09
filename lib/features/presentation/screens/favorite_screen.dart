@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:meals_app/features/data/models/meal.dart';
-import 'package:meals_app/features/presentation/widgets/meal_item.dart';
 import 'package:meals_app/viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class FavoriteScreen extends StatelessWidget {
-  // const FavoriteScreen(this.meal);
+  const FavoriteScreen();
   // static const id = '/favorite-meal';
   // final List<Meal> meal;
 
@@ -14,20 +12,20 @@ class FavoriteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final meal = context.watch<MealsViewModel>().favoriteMeals;
     if (meal.isEmpty) {
-      return Center(
+      return const Center(
         child: Text('There\'s no Favorites yet- try adding some! '),
       );
     } else {
       return ListView.builder(
         itemCount: meal.length,
         itemBuilder: (context, index) {
-          var meals = meal[index];
+          final meals = meal[index];
           return Card(
-            shape: RoundedRectangleBorder(
+            shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(15)),
             ),
             elevation: 5,
-            margin: EdgeInsets.all(10),
+            margin: const EdgeInsets.all(10),
             child: Column(
               children: [
                 Stack(
@@ -51,7 +49,7 @@ class FavoriteScreen extends StatelessWidget {
                       bottom: 20,
                       right: 10,
                       child: Container(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 5,
                           vertical: 5,
                         ),

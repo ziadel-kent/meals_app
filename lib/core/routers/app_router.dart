@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app/core/routers/app_routes.dart';
-import 'package:meals_app/dummy_meals.dart';
-import 'package:meals_app/features/data/models/meal.dart';
-import 'package:meals_app/features/presentation/screens/categories_screen.dart';
 import 'package:meals_app/features/presentation/screens/category_meals_screen.dart';
 import 'package:meals_app/features/presentation/screens/favorite_screen.dart';
 import 'package:meals_app/features/presentation/screens/filters_screen.dart';
@@ -15,7 +12,7 @@ class AppRouter {
       case AppRoutes.kTabs:
         return MaterialPageRoute(
           builder: (context) {
-            return TabsScreen();
+            return const TabsScreen();
           },
         );
       case AppRoutes.kcategories:
@@ -29,20 +26,19 @@ class AppRouter {
       case AppRoutes.kFavorites:
         return MaterialPageRoute(
           builder: (context) {
-            return FavoriteScreen();
+            return const FavoriteScreen();
           },
         );
-      // case AppRoutes.kFilters:
-      //   return MaterialPageRoute(
-      //     builder: (context) {
-      //       return FiltersScreen();
-      //     },
-
-      //   );
+      case AppRoutes.kFilters:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const FiltersScreen();
+          },
+        );
       case AppRoutes.kmealDetails:
         final args = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (context) => MealDetailsScreen(),
+          builder: (context) => const MealDetailsScreen(),
           settings: RouteSettings(arguments: args),
         );
 

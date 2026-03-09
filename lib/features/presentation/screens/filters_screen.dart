@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/dummy_meals.dart';
-import 'package:meals_app/features/data/models/meal.dart';
 import 'package:meals_app/features/presentation/widgets/main_drawer.dart';
+import 'package:meals_app/viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class FiltersScreen extends StatefulWidget {
-  FiltersScreen({super.key, required this.setFilters, this.currentFilters});
-  static const routeName = '/filter_screen';
-  final currentFilters;
-  final Function(Map<String, bool>) setFilters;
+  const FiltersScreen({super.key});
+  // static const routeName = '/filter_screen';
+  // final currentFilters;
+  // final Function(Map<String, bool>) setFilters;
   @override
   State<FiltersScreen> createState() => _FiltersScreenState();
 }
 
 class _FiltersScreenState extends State<FiltersScreen> {
-  var _lactoseFree = false;
-  var _vegetarian = false;
-  var _vegan = false;
-  var _glutenFree = false;
+  bool _lactoseFree = false;
+  bool _vegetarian = false;
+  bool _vegan = false;
+  bool _glutenFree = false;
 
   Widget _buildSwitchListTile(
     String title,
@@ -34,39 +34,48 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
   @override
   void initState() {
-    _lactoseFree = widget.currentFilters['lactose'];
-    _vegan = widget.currentFilters['vegan'];
-    _vegetarian = widget.currentFilters['vegetarian'];
-    _glutenFree = widget.currentFilters['gluten'];
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final currentFilters = context.read<MealsViewModel>().filters;
+      setState(() {
+        _glutenFree = currentFilters['gluten'] ?? false;
+        _lactoseFree = currentFilters['lactose'] ?? false;
+        _vegetarian = currentFilters['vegetarian'] ?? false;
+        _vegan = currentFilters['vegan'] ?? false;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    void _saveFilters() {
+      final selectedFilters = {
+        'gluten': _glutenFree,
+        'lactose': _lactoseFree,
+        'vegan': _vegan,
+        'vegetarian': _vegetarian,
+      };
+      context.read<MealsViewModel>().setFilters(selectedFilters);
+    }
+
+    ;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Filters'),
+        title: const Text('Your Filters'),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.save),
-            onPressed: () {
-              final selectedFilters = {
-                'gluten': _glutenFree,
-                'lactose': _lactoseFree,
-                'vegan': _vegan,
-                'vegetarian': _vegetarian,
-              };
-              widget.setFilters(selectedFilters);
-            },
+            icon: const Icon(Icons.save),
+            onPressed: () => _saveFilters(),
           ),
         ],
       ),
-      drawer: MainDrawer(),
+      drawer: const MainDrawer(),
       body: Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(20),
-            child: Text(
+            padding: const EdgeInsets.all(20),
+            child: const Text(
               'Adjust your meal selection.',
               // style: Theme.of(context).textTheme.title,
             ),

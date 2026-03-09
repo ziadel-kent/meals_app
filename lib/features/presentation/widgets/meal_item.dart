@@ -1,16 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:meals_app/core/constants/app_strings.dart';
-import 'package:meals_app/core/routers/app_router.dart';
 import 'package:meals_app/core/routers/app_routes.dart';
-import 'package:meals_app/dummy_meals.dart';
 import 'package:meals_app/features/data/models/meal.dart';
-import 'package:meals_app/features/presentation/screens/meal_details_screen.dart';
 import 'package:meals_app/viewmodel.dart';
 import 'package:provider/provider.dart';
 
 class MealItem extends StatefulWidget {
-  MealItem({super.key, required this.meal, required this.removeItem});
+  const MealItem({super.key, required this.meal, required this.removeItem});
 
   final Meal meal;
 
@@ -21,7 +17,7 @@ class MealItem extends StatefulWidget {
 }
 
 class _MealItemState extends State<MealItem> {
-  var _isFav = false;
+  bool _isFav = false;
 
   void selectMeal(BuildContext context) async {
     final result = await Navigator.of(
@@ -35,7 +31,7 @@ class _MealItemState extends State<MealItem> {
     return Row(
       children: [
         Icon(icon),
-        SizedBox(width: 6),
+        const SizedBox(width: 6),
         text.length > 10 ? Text(text, overflow: TextOverflow.fade) : Text(text),
       ],
     );
@@ -48,17 +44,17 @@ class _MealItemState extends State<MealItem> {
     return InkWell(
       onTap: () => selectMeal(context),
       child: Card(
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
         elevation: 5,
-        margin: EdgeInsets.all(10),
+        margin: const EdgeInsets.all(10),
         child: Column(
           children: [
             Stack(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(15),
                     topRight: Radius.circular(15),
                   ),
@@ -68,20 +64,24 @@ class _MealItemState extends State<MealItem> {
                     imageUrl: widget.meal.imageUrl,
                     placeholder:
                         (context, url) =>
-                            Center(child: CircularProgressIndicator()),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
+                            const Center(child: CircularProgressIndicator()),
+                    errorWidget:
+                        (context, url, error) => const Icon(Icons.error),
                   ),
                 ),
                 Positioned(
                   bottom: 20,
                   right: 10,
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 5,
+                      vertical: 5,
+                    ),
                     width: 220,
                     color: Colors.black54,
                     child: Text(
                       widget.meal.title,
-                      style: TextStyle(fontSize: 26, color: Colors.white),
+                      style: const TextStyle(fontSize: 26, color: Colors.white),
                       softWrap: true,
                       overflow: TextOverflow.fade,
                     ),
@@ -97,8 +97,8 @@ class _MealItemState extends State<MealItem> {
                     },
                     icon:
                         isFav(widget.meal)
-                            ? Icon(Icons.favorite, color: Colors.red)
-                            : Icon(Icons.favorite),
+                            ? const Icon(Icons.favorite, color: Colors.red)
+                            : const Icon(Icons.favorite),
                   ),
                 ),
               ],

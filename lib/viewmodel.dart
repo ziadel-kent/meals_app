@@ -10,16 +10,15 @@ class MealsViewModel extends ChangeNotifier {
   List<Meal> get favoriteMeals => _favoriteMeals;
   List<Meal> displayedMeal = [];
 
-
-  setCategoryMeals(String CategoryId){
-    displayedMeal= 
-          availableMeals.where((meal) {
-            return meal.categories.contains(CategoryId);
-          }).toList();
+  setCategoryMeals(String CategoryId) {
+    displayedMeal =
+        availableMeals.where((meal) {
+          return meal.categories.contains(CategoryId);
+        }).toList();
   }
+
   void removeItem(String mealId) {
     displayedMeal.removeWhere((meal) => meal.id == mealId);
-    ;
   }
 
   Map<String, bool> filters = {

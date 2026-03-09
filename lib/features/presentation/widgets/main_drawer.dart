@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/core/constants/app_strings.dart';
-import 'package:meals_app/features/presentation/screens/categories_screen.dart';
-import 'package:meals_app/features/presentation/screens/favorite_screen.dart';
-import 'package:meals_app/features/presentation/screens/filters_screen.dart';
-import 'package:meals_app/features/presentation/screens/tabs_screen.dart';
+import 'package:meals_app/core/routers/app_routes.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
@@ -19,7 +15,7 @@ class MainDrawer extends StatelessWidget {
         leading: Icon(icon, size: 26),
         title: Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 22,
             fontFamily: 'RobotoCondensed',
             fontWeight: FontWeight.bold,
@@ -34,16 +30,16 @@ class MainDrawer extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(15)),
               color: Colors.amber,
             ),
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             height: 80,
             width: double.infinity,
             alignment: Alignment.centerLeft,
 
-            child: Text(
+            child: const Text(
               'Cooking Up!',
               style: TextStyle(
                 fontWeight: FontWeight.w900,
@@ -56,7 +52,7 @@ class MainDrawer extends StatelessWidget {
             Navigator.of(context).pushReplacementNamed('/');
           }),
           _buildListTile('Filters', Icons.settings, () {
-            Navigator.of(context).pushReplacementNamed(FiltersScreen.routeName);
+            Navigator.of(context).pushReplacementNamed(AppRoutes.kFilters);
           }),
         ],
       ),
